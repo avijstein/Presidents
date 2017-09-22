@@ -5,7 +5,6 @@ output:
   html_document: default
   pdf_document:
     latex_engine: xelatex
-  word_document: default
 ---
 ```{r, include=FALSE}
 library(tidyverse)
