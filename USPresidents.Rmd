@@ -2,13 +2,12 @@
 title: "Graphing US Presidents"
 output:
   html_notebook: default
-  html_document: default
-  pdf_document:
-    latex_engine: xelatex
 ---
 ```{r, include=FALSE}
 library(tidyverse)
 ```
+
+JohnTempVariable-PresidentTotal 
 
 
 <br />
