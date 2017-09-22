@@ -1,6 +1,5 @@
 # All of the Presidents #
 library(tidyverse)
-library(lubridate)
 
 setwd('~/Desktop/Real Life/Coding Projects/Presidents/')
 
