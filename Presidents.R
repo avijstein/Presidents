@@ -76,9 +76,12 @@ pres3 = merge(pres1, pres2, by = 'President')
 
 ##### MORE STATS OF INTEREST #####
 
+# taking only the years, since it otherwise calculates time differences in seconds. This gives a good
+# enough approximation for me.
 pres3$shortBirth = as.numeric(substr(as.character(cut(pres3$newBirth, breaks = 'years')), 1,4))
 pres3$shortDeath = as.numeric(substr(as.character(cut(pres3$newDeath, breaks = 'years')), 1,4))
 
+# cleaning up / creating new variables
 pres3$first_elected = pres3$`First Elected`
 pres3$life = pres3$shortDeath - pres3$shortBirth
 pres3$elected_age = pres3$`First Elected` - pres3$shortBirth
@@ -113,18 +116,19 @@ zodiac = data.frame('sign' = c('Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Vi
                     'start_dates' = (c('Mar 21', 'Apr 21', 'May 21', 'Jun 22', 'Jul 23', 'Aug 24',
                                               'Sep 24', 'Oct 24', 'Nov 23', 'Dec 22', 'Jan 21', 'Feb 19')))
 
-zodiac$start2 = as.Date(zodiac$start_dates, format = '%b %d')
-zodiac$start = as.numeric(strftime(zodiac$start2, format = "%j"))
-zodiac = zodiac[order(-zodiac$start),]
+# converting to day of year, which makes it easier to find the ranges.
+zodiac$start2 = as.Date(zodiac$start_dates, format = '%b %d')  
+zodiac$start = as.numeric(strftime(zodiac$start2, format = "%j")) # this is day of year format.
+zodiac = zodiac[order(-zodiac$start),] # ordering numerically to make ranges easier to calculate.
 zodiac$end = zodiac$start - 1
-zodiac$end = c(zodiac$end[c(nrow(zodiac), 2:nrow(zodiac)-1)])
+zodiac$end = c(zodiac$end[c(nrow(zodiac), 2:nrow(zodiac)-1)]) # shifting rows by one. 
 zodiac$count = 0
 zodiac = zodiac[,-c(2,3)]
 
 # binning the presidents
 zpres = as.numeric(strftime(pres3$newBirth, format = '%j'))
-zpres2 = data.frame('DOY' = zpres, 'cat' = cut(zpres, breaks = zodiac$end, labels = F))
-zpres2[is.na(zpres2$cat),] = 12
+zpres2 = data.frame('DOY' = zpres, 'cat' = cut(zpres, breaks = zodiac$end, labels = F)) # cut bins it.
+zpres2[is.na(zpres2$cat),] = 12 # everything that didn't find a category is in the last category.
 zodiac$count = table(zpres2$cat)
 zodiac$count = as.integer(zodiac$count)
 

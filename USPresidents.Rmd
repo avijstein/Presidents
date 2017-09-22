@@ -7,9 +7,6 @@ output:
 library(tidyverse)
 ```
 
-JohnTempVariable-PresidentTotal 
-
-
 <br />
 
 ### Inspiration for the project
