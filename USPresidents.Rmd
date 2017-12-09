@@ -1,7 +1,9 @@
 ---
 title: "Graphing US Presidents"
 output:
-  github_document: default
+  github_document:
+    fig_width: 10
+    fig_height: 7
   html_notebook: default
 ---
 ```{r, include=FALSE}
